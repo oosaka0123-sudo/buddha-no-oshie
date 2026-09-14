@@ -23,3 +23,20 @@
 @media(prefers-reduced-motion:reduce){.menu-btn::before,.menu-btn i,.menu a{transition:none!important}}
 /* Mobile header geometry hardening */
 @media(max-width:760px){.site-head{left:0!important;right:0!important;width:100vw!important;max-width:100vw!important;padding:14px 82px 14px 20px!important;overflow:visible}.site-head .brand{max-width:calc(100vw - 110px);white-space:nowrap}.site-head .menu-btn{position:absolute!important;top:8px!important;right:8px!important;left:auto!important;transform:none!important;margin:0!important;width:60px!important;height:60px!important;z-index:130!important}}
+
+/* Mobile overflow hardening */
+html,body{width:100%;max-width:100%;overflow-x:hidden;overscroll-behavior-x:none}
+body,main,header,nav,footer,section,article,figure,.hero,.hero-copy,.chapters,.chapter,.content-block,.essay,.artifact,.artifact-frame,.statement{min-width:0;max-width:100%}
+img,svg,video,canvas,iframe{max-width:100%;height:auto}
+.essay p,.chapter p,.content-block p,.source-ref,a{overflow-wrap:anywhere;word-break:normal}
+@supports(overflow:clip){html,body{overflow-x:clip}}
+@media(max-width:760px){
+  .hero{width:100%;max-width:100%;overflow:hidden}
+  .visual-wrap{position:absolute;right:0;left:auto;top:21vh;width:min(72vw,320px);max-width:72vw;overflow:hidden;pointer-events:none}
+  .sigil{width:100%;max-width:100%;margin:0;transform:none}
+  .chapters,.content-block,.essay,.statement,footer{width:100%;max-width:100%;overflow:hidden}
+  .chapter{width:100%;max-width:100%}
+  .artifact{width:calc(100% - (2 * var(--pad)));max-width:calc(100% - (2 * var(--pad)));margin-left:auto;margin-right:auto;overflow:hidden}
+  .artifact-frame{width:100%;max-width:100%;overflow:hidden}
+  .menu{width:100%;max-width:100vw;overflow-x:hidden}
+}
