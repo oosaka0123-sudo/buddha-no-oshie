@@ -40,3 +40,16 @@ img,svg,video,canvas,iframe{max-width:100%;height:auto}
   .artifact-frame{width:100%;max-width:100%;overflow:hidden}
   .menu{width:100%;max-width:100vw;overflow-x:hidden}
 }
+
+/* horizontal overflow hardening */
+html,body{width:100%;max-width:100%;overflow-x:clip}
+main,section,header,footer,nav,figure,.hero,.chapters,.content-block,.essay,.artifact{max-width:100%}
+img,svg,video,canvas{max-width:100%;height:auto}
+@media(max-width:760px){
+  .hero{overflow-x:clip}
+  .visual-wrap{right:0!important;width:72vw!important;max-width:72vw!important;overflow:hidden!important}
+  .sigil{width:100%!important;max-width:100%!important}
+  .site-head{width:100%!important;max-width:100%!important}
+  .site-head .brand{max-width:calc(100% - 90px)!important;overflow:hidden}
+  .artifact{width:calc(100% - 2*var(--pad))!important;max-width:100%!important}
+}
