@@ -72,3 +72,11 @@ img,svg,video,canvas{max-width:100%;height:auto}
 @media(max-width:760px){.article-page>h1{font-size:clamp(44px,13vw,68px)}.article-page>section:not(.source-ref){padding:5vh 0}.archive-section{padding-top:6vh}}
 
 .related-articles{margin-top:8vh;padding-top:6vh;border-top:1px solid var(--line)}.related-articles h2{font-size:clamp(30px,4vw,52px);font-weight:400;margin:.15em 0 .8em}.related-articles>div{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line)}.related-articles a{background:var(--ink);padding:22px;text-decoration:none;text-align:center}.related-articles a:hover{background:#232019}@media(max-width:620px){.related-articles>div{grid-template-columns:1fr}}
+
+/* mobile performance hardening */
+@media(max-width:760px){
+  .sigil circle{animation:none!important}
+  .noise{display:none!important}
+  .artifact img{transition:none!important}
+  .reveal{transition-duration:.45s}
+}
