@@ -80,3 +80,5 @@ img,svg,video,canvas{max-width:100%;height:auto}
   .artifact img{transition:none!important}
   .reveal{transition-duration:.45s}
 }
+
+.article-meta{margin:.8rem 0 2.2rem;font:10px/1.6 Arial,sans-serif;letter-spacing:.08em;color:var(--muted)}
