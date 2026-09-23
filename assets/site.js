@@ -1,1 +1,25 @@
 ﻿(()=>{const d=document,b=d.body,btn=d.querySelector('.menu-btn'),menu=d.querySelector('.menu'),main=d.querySelector('main'),footer=d.querySelector('footer'),brand=d.querySelector('.brand'); if(!btn||!menu)return; menu.setAttribute('aria-hidden','true');menu.setAttribute('inert',''); const links=[...menu.querySelectorAll('a')]; const close=()=>{btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','メニューを開く');menu.classList.remove('open');menu.setAttribute('aria-hidden','true');menu.setAttribute('inert','');main?.removeAttribute('inert');footer?.removeAttribute('inert');brand?.removeAttribute('tabindex');b.style.overflow='';btn.focus()}; const open=()=>{btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-label','メニューを閉じる');menu.classList.add('open');menu.removeAttribute('aria-hidden');menu.removeAttribute('inert');main?.setAttribute('inert','');footer?.setAttribute('inert','');brand?.setAttribute('tabindex','-1');b.style.overflow='hidden';setTimeout(()=>links[0]?.focus(),0)}; btn.addEventListener('click',()=>btn.getAttribute('aria-expanded')==='true'?close():open()); menu.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();close();return} if(e.key!=='Tab')return; const focusables=links.filter(x=>!x.hasAttribute('disabled')); if(!focusables.length)return; const first=focusables[0],last=focusables[focusables.length-1]; if(e.shiftKey&&d.activeElement===first){e.preventDefault();last.focus()} else if(!e.shiftKey&&d.activeElement===last){e.preventDefault();first.focus()}}); links.forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');b.style.overflow=''})); const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;if(!reduce){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});d.querySelectorAll('.reveal').forEach(e=>io.observe(e))}else d.querySelectorAll('.reveal').forEach(e=>e.classList.add('in'));if(b.dataset.kicker==='HOME'&&!reduce&&innerWidth>760&&!sessionStorage.getItem('buddha-opened')){const o=d.createElement('div');o.className='opening';o.innerHTML='<button type="button" aria-label="オープニングをスキップ">SKIP</button><p>なぜ、人は苦しむのか。</p><span>2500 YEARS / ONE QUESTION</span>';b.append(o);b.style.overflow='hidden';const done=()=>{o.classList.add('leave');b.style.overflow='';sessionStorage.setItem('buddha-opened','1');setTimeout(()=>o.remove(),900)};o.querySelector('button').addEventListener('click',done);setTimeout(()=>o.classList.add('phase2'),900);setTimeout(done,2500)}})();
+
+(function(){
+  const root=document.querySelector('#timeline2500');
+  if(!root)return;
+  const rail=root.querySelector('.timeline-rail');
+  const cards=[...root.querySelectorAll('.timeline-card')];
+  const filters=[...root.querySelectorAll('.timeline-filter')];
+  const progress=root.querySelector('.timeline-progress span');
+  const updateProgress=()=>{
+    const max=rail.scrollWidth-rail.clientWidth;
+    const ratio=max>0?rail.scrollLeft/max:1;
+    progress.style.width=Math.max(0,Math.min(1,ratio))*100+'%';
+  };
+  filters.forEach(btn=>btn.addEventListener('click',()=>{
+    const era=btn.dataset.era;
+    filters.forEach(x=>{const on=x===btn;x.classList.toggle('is-active',on);x.setAttribute('aria-pressed',String(on));});
+    cards.forEach(card=>{card.hidden=era!=='all'&&card.dataset.era!==era;});
+    rail.scrollTo({left:0,behavior:'smooth'});
+    requestAnimationFrame(updateProgress);
+  }));
+  rail.addEventListener('scroll',updateProgress,{passive:true});
+  window.addEventListener('resize',updateProgress,{passive:true});
+  updateProgress();
+})();
