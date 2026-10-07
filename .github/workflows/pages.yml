@@ -1,6 +1,7 @@
-name: Deploy GitHub Pages
+name: QA and Deploy GitHub Pages
 
 on:
+  pull_request:
   push:
     branches: [main]
   workflow_dispatch:
@@ -11,11 +12,23 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate site
+        run: node scripts/qa.js
+
   deploy:
+    if: github.event_name != 'pull_request'
+    needs: qa
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
